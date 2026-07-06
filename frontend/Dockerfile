@@ -1,0 +1,35 @@
+# Stage 1: Install dependencies and build
+FROM node:20-alpine AS build
+WORKDIR /app
+
+COPY package.json package-lock.json* ./
+RUN npm ci
+
+COPY . .
+
+# The backend URL to bake into the server-side rewrite config.
+# Override at build time with: --build-arg NEXT_PUBLIC_API_URL=https://api.example.com
+ARG NEXT_PUBLIC_API_URL=http://backend:8081
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+
+RUN npm run build
+
+# Stage 2: Run the minimal standalone server
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+
+RUN addgroup -S nodejs && adduser -S nextjs -G nodejs
+
+COPY --from=build /app/public ./public
+COPY --from=build --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=build --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+EXPOSE 3000
+ENV PORT=3000
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+  CMD wget -qO- http://localhost:3000/ || exit 1
+
+CMD ["node", "server.js"]
