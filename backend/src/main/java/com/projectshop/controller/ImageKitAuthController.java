@@ -35,7 +35,7 @@ public class ImageKitAuthController {
             throws NoSuchAlgorithmException, InvalidKeyException {
 
         String token     = UUID.randomUUID().toString();
-        String expire    = String.valueOf((System.currentTimeMillis() / 1000) + 3600); // 1-hour window
+        String expire    = String.valueOf((System.currentTimeMillis() / 1000) + 1800); // 30-min window (ImageKit requires < 1 hour)
         String signature = hmacSha1(privateKey, token + expire);
 
         return ResponseEntity.ok(Map.of(
