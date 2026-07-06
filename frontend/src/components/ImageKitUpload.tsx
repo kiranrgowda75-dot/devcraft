@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
+import Cookies from 'js-cookie';
 import { Upload, Loader2, CheckCircle2, X } from 'lucide-react';
 
 interface ImageKitUploadProps {
@@ -23,13 +24,10 @@ const PUBLIC_KEY   = process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!;
 
 /** Fetches short-lived auth params signed by the backend (private key never leaves server). */
 async function getAuthParams(): Promise<{ token: string; expire: string; signature: string }> {
-  const tokenCookie = document.cookie
-    .split('; ')
-    .find((c) => c.startsWith('token='))
-    ?.split('=')[1] ?? '';
+  const jwtToken = Cookies.get('token') ?? '';
 
   const res = await fetch('/api/admin/imagekit/auth', {
-    headers: { Authorization: `Bearer ${tokenCookie}` },
+    headers: { Authorization: `Bearer ${jwtToken}` },
   });
   if (!res.ok) throw new Error('ImageKit auth failed');
   return res.json();
