@@ -36,12 +36,13 @@ public class ProjectService {
      */
     @Transactional(readOnly = true)
     public PagedResponse<ProjectResponse> getPublicProjects(
-            String category, String search, String sort, Integer page, Integer size) {
+            String category, String search, Boolean featured, String sort, Integer page, Integer size) {
 
         Specification<Project> spec = Specification
                 .where(ProjectSpecifications.hasStatus(ProjectStatus.ACTIVE))
                 .and(ProjectSpecifications.hasCategory(blankToNull(category)))
-                .and(ProjectSpecifications.matchesSearch(blankToNull(search)));
+                .and(ProjectSpecifications.matchesSearch(blankToNull(search)))
+                .and(ProjectSpecifications.isFeatured(featured));
 
         Pageable pageable = buildPageable(page, size, sort);
         Page<Project> result = projectRepository.findAll(spec, pageable);
@@ -109,6 +110,7 @@ public class ProjectService {
                 .thumbnailUrl(request.getThumbnailUrl())
                 .screenshotUrls(request.getScreenshotUrls())
                 .demoVideoUrl(request.getDemoVideoUrl())
+                .featured(request.getFeatured() != null ? request.getFeatured() : false)
                 .status(request.getStatus() != null ? request.getStatus() : ProjectStatus.DRAFT)
                 .build();
 
@@ -132,6 +134,9 @@ public class ProjectService {
         project.setThumbnailUrl(request.getThumbnailUrl());
         project.setScreenshotUrls(request.getScreenshotUrls());
         project.setDemoVideoUrl(request.getDemoVideoUrl());
+        if (request.getFeatured() != null) {
+            project.setFeatured(request.getFeatured());
+        }
         if (request.getStatus() != null) {
             project.setStatus(request.getStatus());
         }
@@ -226,6 +231,7 @@ public class ProjectService {
                 .thumbnailUrl(p.getThumbnailUrl())
                 .screenshotUrls(p.getScreenshotUrls())
                 .demoVideoUrl(p.getDemoVideoUrl())
+                .featured(p.getFeatured())
                 .status(p.getStatus())
                 .createdAt(p.getCreatedAt())
                 .updatedAt(p.getUpdatedAt())

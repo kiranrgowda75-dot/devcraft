@@ -29,5 +29,6 @@ public class ProjectRequest {
     private String thumbnailUrl;
     private List<String> screenshotUrls;
     private String demoVideoUrl;
+    private Boolean featured;
     private ProjectStatus status;
 }

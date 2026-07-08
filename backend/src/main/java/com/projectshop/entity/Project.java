@@ -61,6 +61,10 @@ public class Project {
     @Builder.Default
     private ProjectStatus status = ProjectStatus.DRAFT;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean featured = false;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

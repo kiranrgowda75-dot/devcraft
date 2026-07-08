@@ -44,4 +44,10 @@ public final class ProjectSpecifications {
             );
         };
     }
+
+    public static Specification<Project> isFeatured(Boolean featured) {
+        return (root, query, cb) -> featured == null
+                ? cb.conjunction()
+                : cb.equal(root.get("featured"), featured);
+    }
 }

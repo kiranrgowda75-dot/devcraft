@@ -30,10 +30,11 @@ public class PublicProjectController {
     public ResponseEntity<PagedResponse<ProjectResponse>> listProjects(
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String search,
+            @RequestParam(required = false) Boolean featured,
             @RequestParam(required = false) String sort,
             @RequestParam(required = false) Integer page,
             @RequestParam(required = false) Integer size) {
-        return ResponseEntity.ok(projectService.getPublicProjects(category, search, sort, page, size));
+        return ResponseEntity.ok(projectService.getPublicProjects(category, search, featured, sort, page, size));
     }
 
     /**

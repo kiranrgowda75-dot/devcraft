@@ -12,7 +12,9 @@ const nextConfig = {
     ],
   },
   async rewrites() {
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8081';
+    const backendUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://spring-boot-production-6abb.up.railway.app'
+      : (process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8081');
     return [
       {
         source: '/api/:path*',

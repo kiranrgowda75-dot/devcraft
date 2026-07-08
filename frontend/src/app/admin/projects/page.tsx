@@ -279,7 +279,10 @@ export default function ProjectManagement() {
                         <Image src={proj.thumbnailUrl} alt={proj.title} fill className="object-cover" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-navy-900">{proj.title}</p>
+                        <p className="text-sm font-semibold text-navy-900 flex items-center gap-2">
+                          {proj.title}
+                          {proj.featured && <span className="text-[10px] px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded-full font-bold">Featured</span>}
+                        </p>
                         <p className="text-[11px] text-gray-500">Updated {new Date(proj.updatedAt).toLocaleDateString()}</p>
                       </div>
                     </div>
@@ -330,7 +333,10 @@ export default function ProjectManagement() {
                   <Image src={proj.thumbnailUrl} alt={proj.title} fill className="object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-navy-900 truncate">{proj.title}</p>
+                  <p className="text-sm font-semibold text-navy-900 truncate flex items-center gap-2">
+                    {proj.title}
+                    {proj.featured && <span className="text-[10px] px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded-full font-bold flex-shrink-0">Featured</span>}
+                  </p>
                   <p className="text-xs text-gray-500">Updated {new Date(proj.updatedAt).toLocaleDateString()}</p>
                 </div>
                 <div className="flex items-center gap-2">

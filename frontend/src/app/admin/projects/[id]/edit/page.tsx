@@ -25,6 +25,7 @@ export default function EditProjectPage() {
     thumbnailUrl: '',
     screenshotUrls: '',
     demoVideoUrl: '',
+    featured: false,
     status: 'DRAFT',
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -45,6 +46,7 @@ export default function EditProjectPage() {
           thumbnailUrl: p.thumbnailUrl || '',
           screenshotUrls: p.screenshotUrls ? p.screenshotUrls.join('\n') : '',
           demoVideoUrl: p.demoVideoUrl || '',
+          featured: p.featured || false,
           status: p.status || 'DRAFT',
         });
         setLoading(false);
@@ -63,7 +65,7 @@ export default function EditProjectPage() {
       .finally(() => setCategoriesLoading(false));
   }, []);
 
-  const handleFieldChange = (field: keyof typeof formData, value: string) => {
+  const handleFieldChange = (field: keyof typeof formData, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => {
@@ -112,6 +114,7 @@ export default function EditProjectPage() {
         .map((url) => url.trim())
         .filter(Boolean),
       demoVideoUrl: demoVideoUrl ? `https://${demoVideoUrl.replace(/^https?:\/\//, '')}` : null,
+      featured: formData.featured,
       status,
     };
   };
@@ -287,6 +290,19 @@ export default function EditProjectPage() {
                   className="flex-1 px-3.5 py-2 text-sm focus:outline-none"
                 />
               </div>
+            </div>
+            
+            <div className="flex items-center gap-3 pt-2">
+              <input
+                type="checkbox"
+                id="featured-checkbox"
+                checked={formData.featured}
+                onChange={(e) => handleFieldChange('featured', e.target.checked)}
+                className="w-4 h-4 text-[#00668a] bg-white border-gray-300 rounded focus:ring-[#00668a]"
+              />
+              <label htmlFor="featured-checkbox" className="text-sm font-medium text-navy-900">
+                Feature this project on the home page
+              </label>
             </div>
           </div>
         </div>

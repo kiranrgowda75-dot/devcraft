@@ -30,7 +30,7 @@ export default function HomePage() {
   const [hero, setHero] = useState(DEFAULT_HERO);
 
   useEffect(() => {
-    api.get('/projects', { params: { size: 3, sort: 'newest' } })
+    api.get('/projects', { params: { featured: true, size: 3, sort: 'newest' } })
       .then((res) => {
         setProjects(res.data.items);
         setLoading(false);

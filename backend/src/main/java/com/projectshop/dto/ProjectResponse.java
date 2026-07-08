@@ -21,6 +21,7 @@ public class ProjectResponse {
     private String thumbnailUrl;
     private List<String> screenshotUrls;
     private String demoVideoUrl;
+    private Boolean featured;
     private ProjectStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
