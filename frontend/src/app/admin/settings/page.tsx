@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Loader2, Save, CheckCircle2, AlertCircle, ImageIcon } from 'lucide-react';
+import { Loader2, Save, CheckCircle2, AlertCircle } from 'lucide-react';
 import api from '@/lib/api';
+import ImageKitUpload from '@/components/ImageKitUpload';
 
 export default function SiteSettingsPage() {
   const [loading, setLoading] = useState(true);
@@ -128,18 +129,16 @@ export default function SiteSettingsPage() {
 
           <div>
             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-2">
-              Hero photo URL
+              Hero Photo
             </label>
-            <input
-              type="url"
+            <ImageKitUpload
               value={heroImageUrl}
-              onChange={(e) => setHeroImageUrl(e.target.value)}
-              placeholder="https://images.unsplash.com/..."
-              required
-              className="w-full px-3.5 py-2.5 border border-gray-200 rounded-lg text-sm text-navy-900 font-mono focus:outline-none focus:ring-2 focus:ring-[#00668a]/30 focus:border-[#00668a]"
+              onChange={(url) => setHeroImageUrl(url)}
+              folder="/devcraft/hero"
+              showPreview={false}
             />
             <p className="text-xs text-gray-400 mt-1.5">
-              Paste a direct image link (Unsplash, Cloudinary, or any public image URL).
+              Uploads directly to your ImageKit media library.
             </p>
           </div>
 

@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Info, CloudUpload, Plus, Loader2 } from 'lucide-react';
+import { ArrowLeft, Info, CloudUpload, Loader2 } from 'lucide-react';
 import api from '@/lib/api';
+import ImageKitUpload from '@/components/ImageKitUpload';
 
 export default function NewProjectPage() {
   const router = useRouter();
@@ -283,36 +284,50 @@ export default function NewProjectPage() {
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
             <div className="flex items-center gap-2 mb-2">
               <CloudUpload size={18} className="text-[#00668a]" />
-              <h2 className="font-display font-bold text-lg text-navy-900">Project Screenshots</h2>
+              <h2 className="font-display font-bold text-lg text-navy-900">Project Media</h2>
             </div>
             <p className="text-xs text-gray-500 mb-6">
-              Upload up to 5 high-resolution screenshots. The first image will be your project thumbnail.
+              Upload your thumbnail and up to 5 screenshots directly to ImageKit. Images are optimised automatically.
             </p>
 
-            <div className="space-y-5">
-              <div>
-                <label className="block text-xs font-bold text-navy-900 mb-1.5">Thumbnail URL</label>
-                <input
-                  type="url"
-                  placeholder="https://images.unsplash.com/..."
-                  value={formData.thumbnailUrl}
-                  onChange={(e) => handleFieldChange('thumbnailUrl', e.target.value)}
-                  className={`w-full px-3.5 py-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00668a]/30 ${
-                    errors.thumbnailUrl ? 'border-red-400' : 'border-gray-200 focus:border-[#00668a]'
-                  }`}
-                />
-                {errors.thumbnailUrl && <p className="text-red-500 text-xs mt-1">{errors.thumbnailUrl}</p>}
-              </div>
+            <div className="space-y-6">
+              {/* Thumbnail */}
+              <ImageKitUpload
+                label="Thumbnail Image"
+                value={formData.thumbnailUrl}
+                onChange={(url) => handleFieldChange('thumbnailUrl', url)}
+                folder="/devcraft/thumbnails"
+                showPreview
+                error={errors.thumbnailUrl}
+              />
 
+              {/* Screenshots */}
               <div>
-                <label className="block text-xs font-bold text-navy-900 mb-1.5">Screenshot URLs</label>
-                <textarea
-                  rows={4}
-                  placeholder="One image URL per line"
-                  value={formData.screenshotUrls}
-                  onChange={(e) => handleFieldChange('screenshotUrls', e.target.value)}
-                  className="w-full px-3.5 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00668a]/30 focus:border-[#00668a] resize-y"
-                />
+                <label className="block text-xs font-bold text-navy-900 mb-3">Screenshots (up to 5)</label>
+                <div className="space-y-3">
+                  {[0, 1, 2, 3, 4].map((i) => {
+                    const urls = formData.screenshotUrls
+                      ? formData.screenshotUrls.split('\n').map((u) => u.trim())
+                      : [];
+                    return (
+                      <ImageKitUpload
+                        key={i}
+                        label={`Screenshot ${i + 1}`}
+                        value={urls[i] || ''}
+                        onChange={(url) => {
+                          const arr = formData.screenshotUrls
+                            ? formData.screenshotUrls.split('\n').map((u) => u.trim())
+                            : [];
+                          while (arr.length <= i) arr.push('');
+                          arr[i] = url;
+                          handleFieldChange('screenshotUrls', arr.filter(Boolean).join('\n'));
+                        }}
+                        folder="/devcraft/screenshots"
+                        showPreview={false}
+                      />
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>

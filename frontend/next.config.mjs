@@ -12,6 +12,7 @@ const nextConfig = {
       { protocol: 'https', hostname: 'youtu.be' },
       { protocol: 'https', hostname: 'youtube.com' },
       { protocol: 'https', hostname: 'www.youtube.com' },
+      { protocol: 'https', hostname: 'ik.imagekit.io' },
     ],
   },
   async rewrites() {
