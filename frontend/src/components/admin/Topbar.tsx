@@ -25,6 +25,7 @@ export default function Topbar() {
             type="text"
             placeholder="Search marketplace..."
             className="w-full pl-9 pr-4 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-navy-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00668a]/30 focus:border-[#00668a] transition-all"
+            suppressHydrationWarning={true}
           />
         </div>
 

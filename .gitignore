@@ -29,3 +29,6 @@ frontend/out/
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# Local build utilities
+.tools/

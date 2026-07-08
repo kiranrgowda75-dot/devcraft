@@ -72,6 +72,7 @@ export default function Sidebar() {
           <button 
             onClick={handleSignOut}
             className="w-full flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-500 hover:text-red-600 transition-colors"
+            suppressHydrationWarning={true}
           >
             <LogOut size={18} className="text-gray-400" />
             Sign Out
