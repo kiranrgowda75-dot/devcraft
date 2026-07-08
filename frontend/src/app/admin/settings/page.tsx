@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Loader2, Save, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Loader2, Save, CheckCircle2, AlertCircle, ImageIcon } from 'lucide-react';
 import api from '@/lib/api';
 import ImageKitUpload from '@/components/ImageKitUpload';
 
