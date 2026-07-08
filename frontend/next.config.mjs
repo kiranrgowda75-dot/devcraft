@@ -1,9 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Produces a minimal, self-contained server build (.next/standalone) —
-  // makes the Docker image much smaller and avoids shipping node_modules.
-  output: 'standalone',
-
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
