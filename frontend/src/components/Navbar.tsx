@@ -24,7 +24,7 @@ export default function Navbar() {
               </svg>
             </div>
             <span className="font-display font-700 text-lg text-navy-900 tracking-tight">
-              DevCraft
+              DevCraftPro
             </span>
           </Link>
 

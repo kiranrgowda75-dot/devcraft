@@ -3,12 +3,12 @@ import './globals.css';
 import RootLayoutClient from '@/components/RootLayoutClient';
 
 export const metadata: Metadata = {
-  title: 'DevCraft — Precision Digital Craftsmanship',
+  title: 'DevCraftPro — Precision Digital Craftsmanship',
   description:
     'Browse and buy premium, production-ready coding projects. Web apps, mobile apps, APIs, and more — ready to deploy.',
   keywords: ['coding projects', 'web app templates', 'buy source code', 'React', 'Spring Boot'],
   openGraph: {
-    title: 'DevCraft — Precision Digital Craftsmanship',
+    title: 'DevCraftPro — Precision Digital Craftsmanship',
     description: 'Browse and buy premium, production-ready coding projects.',
     type: 'website',
   },

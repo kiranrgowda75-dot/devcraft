@@ -14,7 +14,7 @@ export default function Footer() {
               </svg>
             </div>
             <span className="font-display font-semibold text-base text-white tracking-tight">
-              DevCraft
+              DevCraftPro
             </span>
           </Link>
 
@@ -41,7 +41,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="text-sm text-gray-500 text-center md:text-right">
-            © {new Date().getFullYear()} DevCraft Marketplace.
+            © {new Date().getFullYear()} DevCraftPro Marketplace.
             <br className="hidden sm:block" />
             <span className="text-gray-600"> Precision Digital Craftsmanship.</span>
           </p>
