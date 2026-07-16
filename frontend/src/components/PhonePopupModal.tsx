@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import api from '@/lib/api';
 
 interface PhonePopupModalProps {
   projectId: number;
@@ -18,10 +17,16 @@ export default function PhonePopupModal({ projectId, projectTitle, onClose }: Ph
   const proceed = async (withPhone: boolean) => {
     setSubmitting(true);
     try {
-      await api.post('/leads', {
-        projectId,
-        customerPhone: withPhone && phone.trim() ? phone.trim() : null,
-        inquiryType: 'VIEW_DETAILS',
+      // Use plain fetch (NOT the api axios instance) so the 401/403
+      // response interceptor in api.ts doesn't redirect the user to /admin/login
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          projectId,
+          customerPhone: withPhone && phone.trim() ? phone.trim() : null,
+          inquiryType: 'VIEW_DETAILS',
+        }),
       });
     } catch {
       // silently ignore — don't block the user
