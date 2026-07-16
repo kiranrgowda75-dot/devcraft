@@ -54,12 +54,13 @@ export default function SalesLog() {
   }, [leads, search, statusFilter]);
 
   const handleExportCSV = () => {
-    const headers = ['Date', 'Customer Name', 'Email/ID', 'Project', 'Inquiry Type', 'Status'];
+    const headers = ['Date', 'Customer Name', 'Email/ID', 'Mobile Number', 'Project', 'Inquiry Type', 'Status'];
     const rows = leads.map(l => [
       new Date(l.createdAt).toLocaleString(),
-      l.customerName,
-      l.customerEmail,
-      l.projectTitle,
+      l.customerName || '',
+      l.customerEmail || '',
+      l.customerPhone || '',
+      l.projectTitle || '',
       l.inquiryType,
       l.status
     ]);
@@ -204,6 +205,7 @@ export default function SalesLog() {
               <tr className="bg-gray-50 border-b border-gray-200 text-xs font-bold text-gray-500 tracking-widest uppercase">
                 <th className="px-6 py-4">Date & Time</th>
                 <th className="px-6 py-4">Customer</th>
+                <th className="px-6 py-4">Mobile Number</th>
                 <th className="px-6 py-4">Project Interest</th>
                 <th className="px-6 py-4">Inquiry Type</th>
                 <th className="px-6 py-4">Status</th>
@@ -214,6 +216,7 @@ export default function SalesLog() {
               {filteredLeads.map(lead => {
                 const date = new Date(lead.createdAt);
                 const isContactForm = lead.inquiryType === 'CONTACT_FORM';
+                const isViewDetails = lead.inquiryType === 'VIEW_DETAILS';
                 
                 return (
                   <tr key={lead.id} className="hover:bg-gray-50/50 transition-colors">
@@ -223,24 +226,42 @@ export default function SalesLog() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold ${getAvatarColor(lead.customerName)}`}>
-                          {getInitials(lead.customerName)}
+                        <div className={`w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold ${getAvatarColor(lead.customerName || 'A')}`}>
+                          {lead.customerName ? getInitials(lead.customerName) : '?'}
                         </div>
                         <div>
-                          <p className="text-sm font-semibold text-navy-900">{lead.customerName}</p>
-                          <p className="text-[11px] text-gray-500 font-mono mt-0.5">{lead.customerEmail}</p>
+                          <p className="text-sm font-semibold text-navy-900">{lead.customerName || <span className="text-gray-400 font-normal">Anonymous</span>}</p>
+                          <p className="text-[11px] text-gray-500 font-mono mt-0.5">{lead.customerEmail || '—'}</p>
                         </div>
                       </div>
+                    </td>
+                    {/* Mobile Number */}
+                    <td className="px-6 py-4">
+                      {lead.customerPhone ? (
+                        <a
+                          href={`tel:${lead.customerPhone}`}
+                          className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#00668a] hover:underline"
+                        >
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                          </svg>
+                          {lead.customerPhone}
+                        </a>
+                      ) : (
+                        <span className="text-xs text-gray-300">Not provided</span>
+                      )}
                     </td>
                     <td className="px-6 py-4 text-sm font-medium text-navy-900">
                       {lead.projectTitle}
                     </td>
                     <td className="px-6 py-4">
                       <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-semibold tracking-wide ${
-                        isContactForm ? 'bg-gray-100 text-gray-600' : 'bg-green-100 text-green-700'
+                        isContactForm ? 'bg-gray-100 text-gray-600' 
+                        : isViewDetails ? 'bg-blue-50 text-blue-600'
+                        : 'bg-green-100 text-green-700'
                       }`}>
-                        {isContactForm ? <Mail size={12} /> : <MessageSquare size={12} />}
-                        {isContactForm ? 'Contact Form' : 'WhatsApp Click'}
+                        {isContactForm ? <Mail size={12} /> : isViewDetails ? <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg> : <MessageSquare size={12} />}
+                        {isContactForm ? 'Contact Form' : isViewDetails ? 'View Details' : 'WhatsApp Click'}
                       </div>
                     </td>
                     <td className="px-6 py-4">
