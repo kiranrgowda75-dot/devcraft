@@ -25,7 +25,7 @@ export default function PhonePopupModal({ projectId, projectTitle, onClose }: Ph
         body: JSON.stringify({
           projectId,
           customerPhone: withPhone && phone.trim() ? phone.trim() : null,
-          inquiryType: 'VIEW_DETAILS',
+          inquiryType: 'WHATSAPP_CLICK',
         }),
       });
     } catch {
