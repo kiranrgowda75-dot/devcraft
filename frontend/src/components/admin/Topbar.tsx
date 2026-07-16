@@ -5,7 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-export default function Topbar() {
+interface TopbarProps {
+  onMenuClick?: () => void;
+}
+
+export default function Topbar({ onMenuClick }: TopbarProps) {
   const pathname = usePathname();
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
@@ -13,8 +17,12 @@ export default function Topbar() {
   return (
     <header className="h-16 bg-white border-b border-gray-100 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-20">
       <div className="flex items-center gap-6">
-        {/* Mobile menu toggle (placeholder for now) */}
-        <button className="md:hidden text-gray-400 hover:text-navy-900">
+        {/* Mobile menu toggle */}
+        <button
+          onClick={onMenuClick}
+          className="md:hidden text-gray-400 hover:text-navy-900 p-1 rounded-lg hover:bg-gray-100 transition-colors"
+          aria-label="Open menu"
+        >
           <Menu size={20} />
         </button>
 

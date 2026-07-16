@@ -67,7 +67,7 @@ const INFO_CARDS = [
     id: 'hq-card',
     icon: MapPin,
     title: 'Headquarters',
-    desc: '128 Craftsmanship Blvd.\nDigital District, Tech City 90210',
+    desc: 'Rajarajeshwari Nagar\nBengaluru',
     link: null,
   },
 ];
