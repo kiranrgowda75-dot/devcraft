@@ -61,7 +61,7 @@ public class Project {
     @Builder.Default
     private ProjectStatus status = ProjectStatus.DRAFT;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "boolean default false")
     @Builder.Default
     private Boolean featured = false;
 
