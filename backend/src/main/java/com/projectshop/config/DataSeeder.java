@@ -36,6 +36,7 @@ public class DataSeeder implements CommandLineRunner {
     private final ProjectRepository projectRepository;
     private final LeadRepository leadRepository;
     private final PasswordEncoder passwordEncoder;
+    private final org.springframework.jdbc.core.JdbcTemplate jdbcTemplate;
 
     @Value("${app.admin.username}")
     private String adminUsername;
@@ -45,6 +46,13 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        try {
+            log.info("⚙️ Dropping leads check constraint if it exists...");
+            jdbcTemplate.execute("ALTER TABLE leads DROP CONSTRAINT IF EXISTS leads_inquiry_type_check");
+            log.info("✅ Dropped constraint leads_inquiry_type_check successfully.");
+        } catch (Exception e) {
+            log.warn("⚠️ Failed to drop check constraint (it might not exist or schema differs): {}", e.getMessage());
+        }
         seedAdmin();
         seedCategories();
         seedProjects();
