@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import RootLayoutClient from '@/components/RootLayoutClient';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   title: 'DevCraftPro — Precision Digital Craftsmanship',
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="min-h-screen flex flex-col">
         <RootLayoutClient>{children}</RootLayoutClient>
+        <Analytics />
       </body>
     </html>
   );

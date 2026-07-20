@@ -34,8 +34,8 @@
   }
 
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 border border-gray-300 text-gray-700 font-medium 
-           rounded-lg hover:border-gray-400 hover:bg-gray-50 transition-all duration-200;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-brand-600 text-brand-600 font-medium 
+           rounded-lg hover:bg-brand-600 hover:text-white transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0;
   }
 
   .btn-sm {

@@ -54,7 +54,7 @@ const INFO_CARDS = [
     icon: Mail,
     title: 'Email Us',
     desc: 'For general inquiries and project support.',
-    link: { label: 'hello@devcraft.com', href: 'mailto:hello@devcraft.com' },
+    link: { label: 'devcraftp@gmail.com', href: 'mailto:devcraftp@gmail.com' },
   },
   {
     id: 'whatsapp-card',

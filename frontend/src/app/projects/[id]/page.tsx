@@ -59,7 +59,7 @@ export default function ProjectDetailPage() {
       console.error('Failed to log lead, proceeding anyway', e);
     }
 
-    const msg = encodeURIComponent(`Hi, I'm interested in purchasing "${project.title}" (ID: ${project.id}) for $${project.price}.`);
+    const msg = encodeURIComponent(`Hi, I'm interested in purchasing "${project.title}" (ID: ${project.id}) for ₹${project.price}.`);
     window.open(`https://wa.me/917760060026?text=${msg}`, '_blank');
     setBuying(false);
   };
@@ -80,7 +80,7 @@ export default function ProjectDetailPage() {
   
   // Fake static data for display purposes that backend doesn't provide yet
   const tags = project.techStack || [];
-  const currency = 'USD';
+  const currency = 'Rupees';
   const licenseType = 'Standard License';
   const perks = ['Lifetime Updates', 'Figma Design Files Included', '6 Months Technical Support'];
   const keyFeatures = [
@@ -192,7 +192,7 @@ export default function ProjectDetailPage() {
               {/* Price */}
               <div className="flex items-baseline gap-3">
                 <span className="font-display font-bold text-4xl text-navy-900">
-                  ${Number(project.price).toFixed(2)}
+                  ₹{Number(project.price).toFixed(2)}
                 </span>
                 <span className="text-sm text-gray-400 leading-tight">
                   {currency} / {licenseType}

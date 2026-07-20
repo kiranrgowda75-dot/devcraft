@@ -34,3 +34,4 @@ Desktop.ini
 .tools/
 
 .vercel
+.env*

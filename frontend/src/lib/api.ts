@@ -31,7 +31,11 @@ api.interceptors.response.use(
       // If we get a 401 or 403, token might be expired or database reset
       Cookies.remove('token');
       Cookies.remove('username');
-      window.location.href = '/admin/login';
+      
+      // Only force redirect if the user is in the admin area
+      if (window.location.pathname.startsWith('/admin')) {
+        window.location.href = '/admin/login';
+      }
     }
     return Promise.reject(error);
   }
